@@ -136,32 +136,6 @@
             height: auto;
         }
 
-        /* 정사각형 스타일링 */
-        .graphs-container {
-            display: flex;
-            justify-content: space-between;
-            margin: 0 auto;
-            max-width: 100%;
-            padding: 0 5px;
-            /* 간격 조정 */
-            width: 80%;
-            /* 가로 폭에 맞춤 */
-        }
-
-        .graph {
-            flex: 0 0 calc(33.33% - 10px);
-            /* 정사각형 간격을 5px로 설정 */
-            max-width: calc(33.33% - 10px);
-            /* 정사각형 간격을 5px로 설정 */
-        }
-
-        .graph img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            /* 모서리 둥글게 설정 */
-        }
-
         /* 위로 올라가기 버튼 컨테이너 스타일 */
         #scroll-to-top-container {
             position: fixed;
@@ -243,7 +217,7 @@
             /* 이미지를 수평 가운데 정렬 */
         }
 
-        
+
         .main-text {
             text-align: center;
             /* 중앙 정렬 */
@@ -304,34 +278,84 @@
         <br>
         <br>
 
-        <!-- 이미지 아래에 그래프 링크 정사각형 추가 -->
-        <div class="graphs-container">
+        <div class="container mt-5">
+            <!-- 01번째 그래프 카드 -->
+            <div class="col">
+                <div class="card card-zoom" data-bs-toggle="modal">
+                    <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                    <div class="d-flex">
+                        <!-- 이미지 -->
+                        <div class="graph">
+                            <a href="link_to_your_graph1.html">
+                                <iframe title="Donut Chart" aria-label="Donut Chart"
+                                    src="https://datawrapper.dwcdn.net/HDg6d/4/" scrolling="no" frameborder="0"
+                                    style="width: 100%; border: none;" height="500" data-external="1"></iframe>
+                            </a>
+                        </div>
 
-            <div class="graph">
-                <a href="link_to_your_graph1.html">
-                    <iframe title="Donut Chart" aria-label="Donut Chart" src="https://datawrapper.dwcdn.net/HDg6d/4/"
-                        scrolling="no" frameborder="0" style="width: 100%; border: none;" height="300"
-                        data-external="1"></iframe>
-                </a>
+                        <!-- 텍스트 -->
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <strong>50%</strong><br>
+                                '학자금이나 대출 등으로 인한 가계 곤란'
+                            </h5>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="graph">
-                <a href="link_to_your_graph1.html">
-                    <iframe title="Donut Chart" aria-label="Donut Chart" src="https://datawrapper.dwcdn.net/HDg6d/4/"
-                        scrolling="no" frameborder="0" style="width: 100%; border: none;" height="300"
-                        data-external="1"></iframe>
-                </a>
+            <!-- 02번째 그래프 카드 -->
+            <div class="col">
+                <div class="card card-zoom" data-bs-toggle="modal">
+                    <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                    <div class="d-flex">
+                        <!-- 이미지 -->
+                        <div class="graph">
+                            <a href="link_to_your_graph1.html">
+                                <iframe title="Donut Chart" aria-label="Donut Chart"
+                                    src="https://datawrapper.dwcdn.net/HDg6d/4/" scrolling="no" frameborder="0"
+                                    style="width: 100%; border: none;" height="500" data-external="1"></iframe>
+                            </a>
+                        </div>
+
+                        <!-- 텍스트 -->
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <strong>60%</strong><br>
+                                '우울감이나 무력감 등의 정신적 문제'
+                            </h5>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="graph">
-                <a href="link_to_your_graph1.html">
-                    <iframe title="Donut Chart" aria-label="Donut Chart" src="https://datawrapper.dwcdn.net/HDg6d/4/"
-                        scrolling="no" frameborder="0" style="width: 100%; border: none;" height="300"
-                        data-external="1"></iframe>
-                </a>
-            </div>
+            <!-- 03번째 그래프카드 -->
+            <div class="col">
+                <div class="card card-zoom" data-bs-toggle="modal">
+                    <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                    <div class="d-flex">
+                        <!-- 이미지 -->
+                        <div class="graph">
+                            <a href="link_to_your_graph1.html">
+                                <iframe title="Donut Chart" aria-label="Donut Chart"
+                                    src="https://datawrapper.dwcdn.net/HDg6d/4/" scrolling="no" frameborder="0"
+                                    style="width: 100%; border: none;" height="500" data-external="1"></iframe>
+                            </a>
+                        </div>
 
+                        <!-- 텍스트 -->
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <strong>70&</strong><br>
+                                '취업 우려, 진로 불안정'
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+    
 
         <p>
             어떤 내용을 넣을지 고민중....<br>
