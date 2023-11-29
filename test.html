@@ -1,66 +1,312 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>지:금 우:리는</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <link rel="icon" type="image/png" href="icon_title.png">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Your CSS styles here */
-    </style>
+
+    <title>지:금 우:리는</title>
+
+    <script>
+        var _IS_APP = false;
+
+        if (window.navigator.userAgent.indexOf('KHAN') > 0) {
+            localStorage.setItem('agent', 'KHAN');
+        }
+
+        if (localStorage.getItem('agent') == "KHAN") {
+            _IS_APP = true;
+        }
+
+        var is_mobile = false;
+        var deviceType = 'PC';
+        var browser = detect.parse(navigator.userAgent);
+        if (browser.device.type == 'Mobile') {
+            is_mobile = true;
+            deviceType = 'MOBILE';
+        }
+
+        var visitChannel = '';
+        if (_IS_APP == true) {
+            visitChannel = 'APP';
+        } else {
+            if (is_mobile == true) {
+                visitChannel = 'MO';
+            } else {
+                visitChannel = 'PC';
+            }
+        }
+
+        var member_info = get_memberInfo();
+        var member_data = new Array;
+        if (Object.keys(member_info).length > 0) {
+            var member_gaData = Object.fromEntries(Object.entries(member_info));
+            for (var key in member_gaData) {
+                if (key == 'loginId' || key == 'loginPlatform') {
+                    member_data[key] = member_gaData[key];
+                    delete member_gaData[key];
+                }
+            }
+        }
+    </script>
+
+
+    <script>
+        function isAdBlockerActive() {
+            $('<div id="adsbox" class="adsbox">&nbsp;</div>').appendTo('body');
+            const isBlocked = $('#adsbox').height() === 0;
+            $('#adsbox').remove();
+
+            return isBlocked;
+        }
+
+        function adBlockCheck() {
+            if (isAdBlockerActive()) {
+                var chk_adBlock = 'Y';
+            } else {
+                var chk_adBlock = 'N';
+            }
+
+            return chk_adBlock;
+        }
+    </script>
+
+    <script>
+        let pvObj = {}
+        function laad_gaData() {
+            var adBlock_flag = adBlockCheck();
+
+            var pageUrl_len = document.location.href.split('?')[0].length;
+            var pageUrl = document.location.href;
+
+            let pageviewObj = {}
+
+            let basicObj = {
+                'ep_adblock_flag': adBlock_flag,
+                'ep_page_0depth': visitChannel,
+                'ep_page_1depth': '인터랙티브',
+                'ep_page_day': '월',
+                'ep_page_domain': window.location.hostname,
+                'ep_page_url': pageUrl.substr(0, pageUrl_len),
+                'title': '인터랙티브>[인터랙티브] 단지 그대가 여성노동자라는 이유로',
+                'up_loginyn': (member_gaData['uid']) ? 'Y' : 'N',
+                'up_visit_channel': visitChannel
+            }
+
+            pageviewObj = basicObj;
+
+            let userObj = add_gaData(member_gaData, 'user');
+            if (Object.keys(userObj).length > 0) {
+                pageviewObj = Object.assign({}, basicObj, userObj);
+            }
+
+            var event_gaData = { "page_1depth": "\uc778\ud130\ub799\ud2f0\ube0c", "title": "\uc778\ud130\ub799\ud2f0\ube0c>[\uc778\ud130\ub799\ud2f0\ube0c] \ub2e8\uc9c0 \uadf8\ub300\uac00 \uc5ec\uc131\ub178\ub3d9\uc790\ub77c\ub294 \uc774\uc720\ub85c", "article_type": "interactive", "article_id": 202303221734021, "article_title": "[\uc778\ud130\ub799\ud2f0\ube0c] \ub2e8\uc9c0 \uadf8\ub300\uac00 \uc5ec\uc131\ub178\ub3d9\uc790\ub77c\ub294 \uc774\uc720\ub85c", "article_author": "\ud669\uacbd\uc0c1 \uae30\uc790(74)", "article_date": "2023.03.22", "article_time": "17:34", "article_elapsedDay": "250\uc77c", "page_khanupyn": "N", "page_memberyn": "N" };
+            let eventObj = add_gaData(event_gaData, 'event');
+            if (Object.keys(eventObj).length > 0) {
+                pageviewObj = Object.assign({}, basicObj, userObj, eventObj);
+            }
+
+            pvObj = pageviewObj;
+
+            sendGAPage(pageviewObj);
+        }
+
+
+        function sendGAVirData(obj, _this) {
+            var depth = _this.data('depth');
+            var vr_url = _this.data('vr_url');
+
+            obj['title'] = depth.replaceAll('_', '>');
+            obj['ep_page_url'] = vr_url;
+
+            sendGAVirPage(obj);
+        }
+
+        var p_progress = 0;
+        var oP_progress = 0;
+        var p_isCount = true;
+        var compare_scrollTop = 0;
+        $(window).scroll(function (event) {
+            var this_scrollTop = $(this).scrollTop();
+            var windowHeight = $(window).height();
+
+            if (this_scrollTop > compare_scrollTop) {
+                if (p_isCount == true) {
+                    p_progress = get_pageScrollReach(this_scrollTop, windowHeight);
+                    if (p_progress < 100) {
+                        if (oP_progress <= p_progress) {
+                            oP_progress = p_progress;
+                        }
+                    } else {
+                        p_isCount = false;
+                    }
+                }
+
+                compare_scrollTop = this_scrollTop;
+            }
+        });
+
+        let isEventHandled = false;
+        $(window).on('pagehide beforeunload', function () {
+            var pProgress = 0;
+            if (typeof p_progress !== 'undefined') {
+                if (oP_progress >= p_progress) {
+                    var progress_p = oP_progress;
+                } else {
+                    var progress_p = p_progress;
+                }
+
+                if (progress_p >= 0 && progress_p < 29) {
+                    pProgress = 0;
+                } else if (progress_p >= 30 && progress_p < 50) {
+                    pProgress = 30;
+                } else if (progress_p >= 50 && progress_p < 70) {
+                    pProgress = 50;
+                } else if (progress_p >= 70 && progress_p < 100) {
+                    pProgress = 70;
+                } else if (progress_p == 100) {
+                    pProgress = 100;
+                }
+            }
+
+            if (!isEventHandled) {
+                isEventHandled = true;
+
+                let eventObj = {
+                    'ep_page_scrolldepth': String(pProgress),
+                }
+
+                sendGAEvent(eventObj);
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            laad_gaData();
+        });
+    </script>
+
 </head>
 
 <body>
 
-    <!-- Banner -->
-    <div class="banner">
-        <h1>지:금 우리는</h1>
-    </div>
+    <!-- 전체 wrap (S)-->
+    <div class="wrap">
 
-    <!-- Hero Image -->
-    <div class="hero bg-dark text-center py-5"
-        style="background-image: url('banner.png'); background-size: cover; margin-top: 4em;"></div>
-    <br>
+    </div>
+    <!--// Loading page (E)-->
+    <!--After Loading (S)-->
+    <div class="after-load">
+        <!-- Header(S)-->
+        <div class="interactive-header">
+            <div class="headerWrap">
+                <div class="header_container">
+                    <div class="khan_btn">
+                        <a href="https://www.khan.co.kr/" target="_blank"><img
+                                src="https://img.khan.co.kr/spko/storytelling/2021/edu31/kh_logo_black_100.png"
+                                alt="홈으로"></a>
+                    </div>
+                    <p class="page-title">단지 그대가 여성노동자라는 이유로</p>
 
-    <!-- Text Sections -->
-    <div class="image-text-up">
-        <h5>청년 문제</h5>
-    </div>
-    <div class="image-container">
-        <img src="Picture01.png" alt="Picture" />
-    </div>
-    <div class="image-text-down">
-        <h5>취업 생계 그리고 우울</h5>
-    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Header (E)-->
 
-    <!-- Graphs -->
-    <div class="container graphs-container">
-        <!-- Your graph iframes -->
-    </div>
 
-    <!-- Link to Article -->
-    <div style="text-align: center;">
-        <a href="#series-article" id="series-link" style="display: inline-block;">인터뷰 기사 보러가기</a>
-    </div>
+        <div class="container">
 
-    <!-- Article Content -->
-    <div id="series-article" style="height: 1000px;">
-        <!-- Series article content -->
-    </div>
+            <div class="main-title" style="opacity: 1;">
 
-    <!-- Scroll-to-Top Button -->
-    <div id="scroll-to-top-container">
-        <button id="scroll-to-top-button">Top</button>
-    </div>
+                <h2 class="light_tt_wrap">
+                    <span>단지 그대가</span> <br class="only_show_mb_br">
+                    <span class="light">여성노동자</span> <br class="only_show_mb_br">
+                    <span> 라는 이유로</span>
+                    <div class="hidden_box_word" onclick="hide_wordbox();"
+                        style="display: none; transition: all 1.5s ease 0s;"></div>
+                </h2>
+                <span class="read-article go_to_interactive_series" onclick="goTo_contents_s();">인터랙티브 보러가기</span>
 
-    <!-- jQuery and JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // JavaScript code
-    </script>
+                <script>
+                    function goTo_contents_s() {
+                        var offset_mw = $(".main-wrap").offset();
+                        $("html, body").animate({ scrollTop: offset_mw.top }, 500);
+                    };
+
+                    function goTo_contents_arti_s() {
+                        var offset_maw = $(".series_arti_ttWrap").offset();
+                        $("html, body").animate({ scrollTop: offset_maw.top }, 500);
+                    };
+                </script>
+
+            </div>
+
+            <!-- 인터랙티브 시리즈 영역 (S) -->
+            <div class="main-wrap">
+
+                <h2 class="main_wrap_title interactive_series_ttTitle">인터랙티브</h2>
+
+                <div class="main_articles_wrap_rd">
+
+
+                </div>
+
+                <span class="read-article" onclick="goTo_contents_arti_s();">시리즈 기사 보러가기</span>
+            </div>
+            <!-- 인터랙티브 시리즈 영역 (E) -->
+
+        </div>
+    </div>
+    <!-- commonfooter -->
+    <footer class="footer__">
+        <div class="corp-info__">
+            <address>
+                <span>서울시 중구 정동길3 경향신문사</span>
+                <span>고객센터 : 02-3701-1114</span>
+                <span>등록번호 : 서울 아02041</span>
+                <span>등록일자 : 2012.03.22</span><br>
+                <span>발행인 : 김석종</span>
+                <span>편집인 : 이기수</span>
+                <span>청소년보호책임자 : 임아영</span>
+                <p style="text-align: left;"><strong>ⓒ경향신문, All rights reserved.</strong></p>
+            </address>
+        </div>
+
+    </footer> <!-- commonfooter -->
+    </div>
+    <!-- <script type="text/javascript" src="js/script.js?1679549668"></script> -->
+    <!-- <script type="text/javascript" src="js/script.js?1679549668"></script> -->
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/scriptIndex.js"></script>
+
+    <script type="text/javaSCRIPT">
+            var impTp = "";
+            if(navigator.userAgent.match(/iPhone|BlackBerry|Mobile|Android|Windows CE/i) && !navigator.userAgent.match(/SHW-M380S|SHW-M180S|SHW-M180L|SCH-I800|SGH-T849|SHW-M480W/i)){
+                     impTp = "&impTp=mobile";
+                     document.write('<img src="//ad.khan.co.kr/imp/mobile_imp.php?dp=103101" width="0" height="0" style="display: none;" alt="img" />');
+            } else {
+                     document.write('<img src="//ad.khan.co.kr/imp/khan_imp.php?dp=015111" width="0" height="0" style="display: none;" alt="img" />');
+            }
+            
+            document.write('<img src="//ad.khan.co.kr/artCnt/khanArt_cnt.php?artid=202303221734021&code=940708&mode=khan'+ impTp +'" width="0" height="0" style="display: none;" />');
+        </script><img src="//ad.khan.co.kr/imp/khan_imp.php?dp=015111" width="0" height="0" style="display: none;"
+        alt="img"><img src="//ad.khan.co.kr/artCnt/khanArt_cnt.php?artid=202303221734021&amp;code=940708&amp;mode=khan"
+        width="0" height="0" style="display: none;">
+
+
+    <script type="text/javascript"
+        id="">(function (a, e, b, f, g, c, d) { a[b] = a[b] || function () { (a[b].q = a[b].q || []).push(arguments) }; c = e.createElement(f); c.async = 1; c.src = "https://www.clarity.ms/tag/" + g + "?ref\x3dgtm2"; d = e.getElementsByTagName(f)[0]; d.parentNode.insertBefore(c, d) })(window, document, "clarity", "script", "7dbjtgnofu");</script>
+    <script type="text/javascript" id="">(function () {
+            var f = (new Date).getTime(), a = 0, k = 0, d = !0, h = !1, l = function () { k = (new Date).getTime(); a += k - f; d = !0 }, e = function (b) { d && (d = !1, f = (new Date).getTime(), h = !1); window.clearTimeout(m); m = window.setTimeout(l, 5E3) }, c = function (b, n) { window.addEventListener ? window.addEventListener(b, n) : window.attachEvent && window.attachEvent("on" + b, n) }, g = function (b) {
+                d || (a += (new Date).getTime() - f); !h && 0 < a && 36E5 > a && window.dataLayer.push({ event: "newtTimeTracker", nonIdleTimeElapsed: a }); d && (h = !0); b && "beforeunload" === b.type && window.removeEventListener("beforeunload",
+                    g); a = 0; f = (new Date).getTime(); window.setTimeout(g, 15E3)
+            }; c("keydown", e); c("scroll", e); c("mousedown", e); c("mousemove", e); c("resize", e); c("beforeunload", g); var m = window.setTimeout(l, 5E3); window.setTimeout(g, 15E3)
+        })();</script>
+    <script type="text/javascript"
+        id="">(function (a, e, b, f, g, c, d) { a[b] = a[b] || function () { (a[b].q = a[b].q || []).push(arguments) }; c = e.createElement(f); c.async = 1; c.src = "https://www.clarity.ms/tag/" + g + "?ref\x3dgtm2"; d = e.getElementsByTagName(f)[0]; d.parentNode.insertBefore(c, d) })(window, document, "clarity", "script", "7dbjtgnofu");</script>
 </body>
 
 </html>

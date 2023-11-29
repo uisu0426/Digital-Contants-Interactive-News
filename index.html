@@ -55,6 +55,13 @@
             /* 포인터 커서로 변경 */
         }
 
+        .card-body {
+            padding-top: 10px;
+            /* 상단 여백 조정 */
+            padding-bottom: 10px;
+            /* 하단 여백 조정 */
+        }
+
         .row-cols-1 {
             column-count: 1;
         }
@@ -225,13 +232,6 @@
             /* 텍스트 좌우 패딩을 추가하여 동일하게 조정 */
             margin: auto;
         }
-
-        .main-text h5 {
-            font-size: 1.5em;
-            /* h5 텍스트 크기 */
-            color: black;
-            /* 텍스트 색상 */
-        }
     </style>
 </head>
 
@@ -242,7 +242,7 @@
     <!-- 배너 -->
     </div>
     <div class="banner">
-        <h1>지:금 우리는</h1>
+        <h1>지:금 우:리는</h1>
     </div>
 
     <div class="hero bg-dark text-center py-5"
@@ -251,7 +251,7 @@
 
     <br>
     <div class="main-text">
-        <h5>취업 생계 그리고 우울</h5>
+        <h1>청년, 우리들의 이야기</h1>
     </div>
     <br>
 
@@ -260,9 +260,13 @@
     </div>
     <br>
 
-    <p>
-        여기랑 이미지 양 옆에 뭔가 이미지나 텍스트를 추가하는게 좋을것 같은 느낌? 아닌가? 모르겠다
-    </p>
+    <br>
+    <div class="main-text">
+        <h4>취업고민</h4>
+        <h3>생계 고민</h3>
+        <h2>그리고 우울증</h2>
+    </div>
+    <br>
 
 
 
@@ -282,22 +286,15 @@
             <!-- 01번째 그래프 카드 -->
             <div class="col">
                 <div class="card card-zoom" data-bs-toggle="modal">
-                    <!-- 이미지와 텍스트를 감싸는 div 추가 -->
                     <div class="d-flex">
                         <!-- 이미지 -->
-                        <div class="graph">
-                            <a href="link_to_your_graph1.html">
-                                <iframe title="Donut Chart" aria-label="Donut Chart"
-                                    src="https://datawrapper.dwcdn.net/HDg6d/4/" scrolling="no" frameborder="0"
-                                    style="width: 100%; border: none;" height="500" data-external="1"></iframe>
-                            </a>
-                        </div>
+                        <img src="image01.png" class="mr-3" />
 
-                        <!-- 텍스트 -->
                         <div class="card-body">
                             <h5 class="card-title">
                                 <strong>50%</strong><br>
-                                '학자금이나 대출 등으로 인한 가계 곤란'
+                                '학자금이나 대출 <br>
+                                등으로 인한 가계 곤란'
                             </h5>
                         </div>
                     </div>
@@ -307,22 +304,15 @@
             <!-- 02번째 그래프 카드 -->
             <div class="col">
                 <div class="card card-zoom" data-bs-toggle="modal">
-                    <!-- 이미지와 텍스트를 감싸는 div 추가 -->
                     <div class="d-flex">
                         <!-- 이미지 -->
-                        <div class="graph">
-                            <a href="link_to_your_graph1.html">
-                                <iframe title="Donut Chart" aria-label="Donut Chart"
-                                    src="https://datawrapper.dwcdn.net/HDg6d/4/" scrolling="no" frameborder="0"
-                                    style="width: 100%; border: none;" height="500" data-external="1"></iframe>
-                            </a>
-                        </div>
+                        <img src="image02.png" class="mr-3" />
 
-                        <!-- 텍스트 -->
                         <div class="card-body">
                             <h5 class="card-title">
                                 <strong>60%</strong><br>
-                                '우울감이나 무력감 등의 정신적 문제'
+                                '우울감이나 무력감 <br>
+                                등의 정신적 문제'
                             </h5>
                         </div>
                     </div>
@@ -332,21 +322,13 @@
             <!-- 03번째 그래프카드 -->
             <div class="col">
                 <div class="card card-zoom" data-bs-toggle="modal">
-                    <!-- 이미지와 텍스트를 감싸는 div 추가 -->
                     <div class="d-flex">
                         <!-- 이미지 -->
-                        <div class="graph">
-                            <a href="link_to_your_graph1.html">
-                                <iframe title="Donut Chart" aria-label="Donut Chart"
-                                    src="https://datawrapper.dwcdn.net/HDg6d/4/" scrolling="no" frameborder="0"
-                                    style="width: 100%; border: none;" height="500" data-external="1"></iframe>
-                            </a>
-                        </div>
+                        <img src="image03.png" class="mr-3" />
 
-                        <!-- 텍스트 -->
                         <div class="card-body">
                             <h5 class="card-title">
-                                <strong>70&</strong><br>
+                                <strong>70%</strong><br>
                                 '취업 우려, 진로 불안정'
                             </h5>
                         </div>
@@ -355,13 +337,6 @@
             </div>
         </div>
 
-    
-
-        <p>
-            어떤 내용을 넣을지 고민중....<br>
-            교수님 왜 이런걸 시킨거죠?<br>
-            강의평가 기대하세요^^<br>
-        </p>
     </div>
 
     <!-- 새로운 링크 -->
@@ -391,7 +366,8 @@
                             <!-- 텍스트 -->
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <strong>'차에 치이면 아무것도 안해도 되겠지'</strong><br>
+                                    <strong>'차에 치이면 <br>
+                                        아무것도 안해도 되겠지'</strong><br>
                                     극단적인 생각까지 하는 20대
                                 </h5>
                             </div>
