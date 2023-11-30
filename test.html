@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -9,304 +9,750 @@
 
     <title>지:금 우:리는</title>
 
-    <script>
-        var _IS_APP = false;
+    <link rel="stylesheet" href="styles.css">
 
-        if (window.navigator.userAgent.indexOf('KHAN') > 0) {
-            localStorage.setItem('agent', 'KHAN');
+    <link rel="stylesheet"
+        href="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/easygpt/default.css" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        /* CSS를 이용하여 스타일링 */
+
+        /* 카드 설정 */
+        .card {
+            margin: 20px;
+            /* 카드 사이 여백 20px 설정 */
+            width: calc(100% - 40px);
+            /* 카드의 기본 크기, 여백을 제외한 100% 너비 */
+            max-width: 40rem;
+            /* 카드의 최대 너비 설정 */
+            min-width: 18rem;
+            /* 카드의 최소 너비 설정 */
         }
 
-        if (localStorage.getItem('agent') == "KHAN") {
-            _IS_APP = true;
+        /* 카드 확대 스타일 */
+        .card-zoom {
+            transition: transform 0.3s;
+            /* 변환 효과를 0.3초 동안 적용 */
         }
 
-        var is_mobile = false;
-        var deviceType = 'PC';
-        var browser = detect.parse(navigator.userAgent);
-        if (browser.device.type == 'Mobile') {
-            is_mobile = true;
-            deviceType = 'MOBILE';
+        .card-zoom:hover {
+            transform: scale(1.1);
+            /* 마우스 오버 시 1.1배 확대 */
+            cursor: pointer;
+            /* 포인터 커서로 변경 */
         }
 
-        var visitChannel = '';
-        if (_IS_APP == true) {
-            visitChannel = 'APP';
-        } else {
-            if (is_mobile == true) {
-                visitChannel = 'MO';
-            } else {
-                visitChannel = 'PC';
-            }
+        .card-body {
+            padding-top: 10px;
+            /* 상단 여백 조정 */
+            padding-bottom: 10px;
+            /* 하단 여백 조정 */
         }
 
-        var member_info = get_memberInfo();
-        var member_data = new Array;
-        if (Object.keys(member_info).length > 0) {
-            var member_gaData = Object.fromEntries(Object.entries(member_info));
-            for (var key in member_gaData) {
-                if (key == 'loginId' || key == 'loginPlatform') {
-                    member_data[key] = member_gaData[key];
-                    delete member_gaData[key];
-                }
-            }
-        }
-    </script>
-
-
-    <script>
-        function isAdBlockerActive() {
-            $('<div id="adsbox" class="adsbox">&nbsp;</div>').appendTo('body');
-            const isBlocked = $('#adsbox').height() === 0;
-            $('#adsbox').remove();
-
-            return isBlocked;
+        .row-cols-1 {
+            column-count: 1;
         }
 
-        function adBlockCheck() {
-            if (isAdBlockerActive()) {
-                var chk_adBlock = 'Y';
-            } else {
-                var chk_adBlock = 'N';
-            }
-
-            return chk_adBlock;
-        }
-    </script>
-
-    <script>
-        let pvObj = {}
-        function laad_gaData() {
-            var adBlock_flag = adBlockCheck();
-
-            var pageUrl_len = document.location.href.split('?')[0].length;
-            var pageUrl = document.location.href;
-
-            let pageviewObj = {}
-
-            let basicObj = {
-                'ep_adblock_flag': adBlock_flag,
-                'ep_page_0depth': visitChannel,
-                'ep_page_1depth': '인터랙티브',
-                'ep_page_day': '월',
-                'ep_page_domain': window.location.hostname,
-                'ep_page_url': pageUrl.substr(0, pageUrl_len),
-                'title': '인터랙티브>[인터랙티브] 단지 그대가 여성노동자라는 이유로',
-                'up_loginyn': (member_gaData['uid']) ? 'Y' : 'N',
-                'up_visit_channel': visitChannel
-            }
-
-            pageviewObj = basicObj;
-
-            let userObj = add_gaData(member_gaData, 'user');
-            if (Object.keys(userObj).length > 0) {
-                pageviewObj = Object.assign({}, basicObj, userObj);
-            }
-
-            var event_gaData = { "page_1depth": "\uc778\ud130\ub799\ud2f0\ube0c", "title": "\uc778\ud130\ub799\ud2f0\ube0c>[\uc778\ud130\ub799\ud2f0\ube0c] \ub2e8\uc9c0 \uadf8\ub300\uac00 \uc5ec\uc131\ub178\ub3d9\uc790\ub77c\ub294 \uc774\uc720\ub85c", "article_type": "interactive", "article_id": 202303221734021, "article_title": "[\uc778\ud130\ub799\ud2f0\ube0c] \ub2e8\uc9c0 \uadf8\ub300\uac00 \uc5ec\uc131\ub178\ub3d9\uc790\ub77c\ub294 \uc774\uc720\ub85c", "article_author": "\ud669\uacbd\uc0c1 \uae30\uc790(74)", "article_date": "2023.03.22", "article_time": "17:34", "article_elapsedDay": "250\uc77c", "page_khanupyn": "N", "page_memberyn": "N" };
-            let eventObj = add_gaData(event_gaData, 'event');
-            if (Object.keys(eventObj).length > 0) {
-                pageviewObj = Object.assign({}, basicObj, userObj, eventObj);
-            }
-
-            pvObj = pageviewObj;
-
-            sendGAPage(pageviewObj);
+        .row-cols-2 {
+            column-count: 2;
         }
 
-
-        function sendGAVirData(obj, _this) {
-            var depth = _this.data('depth');
-            var vr_url = _this.data('vr_url');
-
-            obj['title'] = depth.replaceAll('_', '>');
-            obj['ep_page_url'] = vr_url;
-
-            sendGAVirPage(obj);
+        /* 버튼 스타일 */
+        #button {
+            background-color: #007bff;
+            /* 버튼 배경색 지정 */
+            color: #fff;
+            /* 텍스트 색상 지정 */
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            opacity: 0.8;
         }
 
-        var p_progress = 0;
-        var oP_progress = 0;
-        var p_isCount = true;
-        var compare_scrollTop = 0;
-        $(window).scroll(function (event) {
-            var this_scrollTop = $(this).scrollTop();
-            var windowHeight = $(window).height();
+        /* 버튼 호버(마우스 오버) 스타일 */
+        #button:hover {
+            background-color: #0056b3;
+            /* 호버 시 배경색 변경 */
+            opacity: 1;
+        }
 
-            if (this_scrollTop > compare_scrollTop) {
-                if (p_isCount == true) {
-                    p_progress = get_pageScrollReach(this_scrollTop, windowHeight);
-                    if (p_progress < 100) {
-                        if (oP_progress <= p_progress) {
-                            oP_progress = p_progress;
-                        }
-                    } else {
-                        p_isCount = false;
-                    }
-                }
+        /* 버튼 스타일 */
+        #scroll-to-top-button {
+            background-color: #007bff;
+            /* 버튼 배경색 지정 */
+            color: #fff;
+            /* 텍스트 색상 지정 */
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            opacity: 0.8;
+        }
 
-                compare_scrollTop = this_scrollTop;
-            }
-        });
+        /* 버튼 호버(마우스 오버) 스타일 */
+        #scroll-to-top-button:hover {
+            background-color: #0056b3;
+            /* 호버 시 배경색 변경 */
+            opacity: 1;
+        }
 
-        let isEventHandled = false;
-        $(window).on('pagehide beforeunload', function () {
-            var pProgress = 0;
-            if (typeof p_progress !== 'undefined') {
-                if (oP_progress >= p_progress) {
-                    var progress_p = oP_progress;
-                } else {
-                    var progress_p = p_progress;
-                }
+        /* 텍스트 중앙정렬 */
+        .center-text {
+            text-align: center;
+            margin: 0 auto;
+        }
 
-                if (progress_p >= 0 && progress_p < 29) {
-                    pProgress = 0;
-                } else if (progress_p >= 30 && progress_p < 50) {
-                    pProgress = 30;
-                } else if (progress_p >= 50 && progress_p < 70) {
-                    pProgress = 50;
-                } else if (progress_p >= 70 && progress_p < 100) {
-                    pProgress = 70;
-                } else if (progress_p == 100) {
-                    pProgress = 100;
-                }
-            }
+        /* 중앙 정렬 */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
-            if (!isEventHandled) {
-                isEventHandled = true;
+        /* iframe 스타일 */
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
 
-                let eventObj = {
-                    'ep_page_scrolldepth': String(pProgress),
-                }
+        /* 모달 내용의 높이 설정 */
+        .modal-content {
+            height: 80vh;
+            /* 모달 창의 높이를 화면 높이의 80%로 설정 */
+        }
 
-                sendGAEvent(eventObj);
-            }
-        });
-    </script>
+        /* 기사 내용 양옆 여백 지정*/
+        .contents_margin {
+            padding-left: 21%;
+            /* 왼쪽 여백을 7%로 설정 */
+            padding-right: 21%;
+            /* 오른쪽 여백을 7%로 설정 */
+        }
 
-    <script>
-        $(document).ready(function () {
-            laad_gaData();
-        });
-    </script>
+        /* 부모 요소인 .content를 flex로 설정하여 내부의 .container를 가운데 정렬 */
+        .content {
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            /* 화면 높이의 100%를 차지하도록 설정 (임시) */
+        }
 
+        /* 이미지가 들어갈 .container를 가운데 정렬 */
+        .container {
+            text-align: center;
+        }
+
+        /* 이미지 스타일링 */
+        .container img {
+            max-width: 50%;
+            height: auto;
+        }
+
+        /* 위로 올라가기 버튼 컨테이너 스타일 */
+        #scroll-to-top-container {
+            position: fixed;
+            bottom: 20px;
+            /* 원하는 위치로 조정 가능 */
+            right: 20px;
+            /* 원하는 위치로 조정 가능 */
+            z-index: 9999;
+            /* 다른 요소 위에 나타나도록 함 */
+        }
+
+        /* 버튼 스타일 */
+        #scroll-to-top-button {
+            background-color: #007bff;
+            /* 버튼 배경색 지정 */
+            color: #fff;
+            /* 텍스트 색상 지정 */
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            opacity: 0.8;
+        }
+
+        /* 버튼 호버(마우스 오버) 스타일 */
+        #scroll-to-top-button:hover {
+            background-color: #0056b3;
+            /* 호버 시 배경색 변경 */
+            opacity: 1;
+        }
+
+        /* 기사 내용 양옆 여백 지정*/
+        .contents_margin {
+            padding-left: 21%;
+            /* 왼쪽 여백을 7%로 설정 */
+            padding-right: 21%;
+            /* 오른쪽 여백을 7%로 설정 */
+        }
+
+        .banner {
+            background-color: rgba(255, 255, 255, 0.7);
+            /* 반투명 배경색 */
+            padding: 3.5px;
+            /* 내부 여백 설정 */
+            position: fixed;
+            /* 배너를 화면에 고정 */
+            top: 0;
+            /* 화면 상단에 배치 */
+            left: 50%;
+            /* 화면 가로 중앙에 배치 */
+            transform: translateX(-50%);
+            /* 가로 가운데 정렬을 위한 변형 */
+            width: 100%;
+            /* 너비를 페이지 폭에 맞춤 */
+            text-align: center;
+            /* 텍스트를 가운데 정렬 */
+            z-index: 999;
+            /* 다른 요소 위에 배너가 보이도록 설정 */
+        }
+
+        .banner h5 {
+            font-size: 1em;
+            /* h5 텍스트 크기 */
+            color: black;
+            /* 텍스트 색상 */
+        }
+
+        .image-container {
+            text-align: center;
+            /* 이미지를 가운데 정렬 */
+        }
+
+        .image-container img {
+            max-width: 80%;
+            height: auto;
+            display: block;
+            /* 이미지를 블록 요소로 설정하여 중앙 정렬 */
+            margin: auto;
+            /* 이미지를 수평 가운데 정렬 */
+        }
+
+        .center-text {
+            text-align: center;
+            /* 중앙 정렬 */
+            padding: 0 30px;
+            /* 텍스트 좌우 패딩을 추가하여 동일하게 조정 */
+            margin: auto;
+        }
+
+        /* 각 섹션의 스타일 */
+        section {
+            height: 100vh;
+            /* 뷰포트 높이의 100% */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 버튼 스타일 */
+        .scroll-button {
+            display: block;
+            margin: 10px;
+            padding: 8px 16px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- 전체 wrap (S)-->
-    <div class="wrap">
-
+    <!-- 배너 -->
+    <div class="banner">
+        <h1>지:금 우:리는</h1>
     </div>
-    <!--// Loading page (E)-->
-    <!--After Loading (S)-->
-    <div class="after-load">
-        <!-- Header(S)-->
-        <div class="interactive-header">
-            <div class="headerWrap">
-                <div class="header_container">
-                    <div class="khan_btn">
-                        <a href="https://www.khan.co.kr/" target="_blank"><img
-                                src="https://img.khan.co.kr/spko/storytelling/2021/edu31/kh_logo_black_100.png"
-                                alt="홈으로"></a>
+
+
+
+    <section id="section1">
+        <div class="center-text">
+            <div class="hero bg-dark text-center py-5"
+                style="background-image: url('banner.png'); background-size: cover; margin-top: 4em;">
+            </div>
+            <h1>청년, 우리들의 이야기</h1>
+            <div class="image-container">
+                <img src="Picture01.png" alt="Picture" />
+            </div>
+            <br>
+            <h2>취업 고민, 생계 고민 그리고 우울증</h2>
+            <h4><strong>청년 102명</strong>에게 물어보았다</h4>
+
+            <button id="button" onclick="scrollToSection('section2')" class="scroll-link"
+                style="display: inline-block; margin-top: 1em;">관련 그래프 보러가기</button>
+
+        </div>
+    </section>
+
+    <section id="section2">
+        <!-- 이동할 위치에 해당하는 요소 -->
+        <!-- 시리즈 기사 내용 -->
+        <div class="container mt-5">
+            <br>
+            <br>
+            <!-- 01번째 그래프 카드 -->
+            <div class="col">
+                <div class="card card-zoom" data-bs-toggle="modal">
+                    <div class="d-flex">
+                        <!-- 이미지 -->
+                        <img src="image01.png" class="mr-3 " />
+
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <br>
+                                <br>
+                                <strong>50%</strong><br>
+                                '학자금이나 대출 <br>
+                                등으로 인한 가계 곤란'
+                            </h5>
+                        </div>
                     </div>
-                    <p class="page-title">단지 그대가 여성노동자라는 이유로</p>
-
                 </div>
             </div>
-        </div>
-        <!-- //Header (E)-->
 
+            <!-- 02번째 그래프 카드 -->
+            <div class="col">
+                <div class="card card-zoom" data-bs-toggle="modal">
+                    <div class="d-flex">
+                        <!-- 이미지 -->
+                        <img src="image02.png" class="mr-3" />
 
-        <div class="container">
-
-            <div class="main-title" style="opacity: 1;">
-
-                <h2 class="light_tt_wrap">
-                    <span>단지 그대가</span> <br class="only_show_mb_br">
-                    <span class="light">여성노동자</span> <br class="only_show_mb_br">
-                    <span> 라는 이유로</span>
-                    <div class="hidden_box_word" onclick="hide_wordbox();"
-                        style="display: none; transition: all 1.5s ease 0s;"></div>
-                </h2>
-                <span class="read-article go_to_interactive_series" onclick="goTo_contents_s();">인터랙티브 보러가기</span>
-
-                <script>
-                    function goTo_contents_s() {
-                        var offset_mw = $(".main-wrap").offset();
-                        $("html, body").animate({ scrollTop: offset_mw.top }, 500);
-                    };
-
-                    function goTo_contents_arti_s() {
-                        var offset_maw = $(".series_arti_ttWrap").offset();
-                        $("html, body").animate({ scrollTop: offset_maw.top }, 500);
-                    };
-                </script>
-
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <br>
+                                <br>
+                                <strong>60%</strong><br>
+                                '우울감이나 무력감 <br>
+                                등의 정신적 문제'
+                            </h5>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- 인터랙티브 시리즈 영역 (S) -->
-            <div class="main-wrap">
+            <!-- 03번째 그래프카드 -->
+            <div class="col">
+                <div class="card card-zoom" data-bs-toggle="modal">
+                    <div class="d-flex">
+                        <!-- 이미지 -->
+                        <img src="image03.png" class="mr-3" />
 
-                <h2 class="main_wrap_title interactive_series_ttTitle">인터랙티브</h2>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <br>
+                                <br>
+                                <strong>70%</strong><br>
+                                '취업 우려, 진로 불안정'
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="button" onclick="scrollToSection('section3')" class="scroll-link"
+                style="display: inline-block; margin-top: 1em;">인터뷰 보러가기</button>
+        </div>
 
-                <div class="main_articles_wrap_rd">
+    </section>
 
+    <br>
+    <br>
+    <section id="section3">
+        <!-- 새로운 섹션 내용 -->
+        <br>
+        <br>
 
+        <div class="container mt-5">
+            <!-- 카드 뉴스 각 줄에 2개씩 배치 -->
+            <div class="row row-cols-1 row-cols-md-2">
+
+                <!-- 01번째 뉴스 카드 -->
+                <div class="col">
+                    <div class="card card-zoom" data-bs-toggle="modal" data-bs-target="#myModal01">
+                        <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                        <div class="d-flex">
+                            <!-- 이미지 -->
+                            <img src="News01-Thumbnail.png" alt="첫번째 뉴스" class="mr-3" />
+
+                            <!-- 텍스트 -->
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <br>
+                                    <br>
+                                    <strong>'차에 치이면 <br>
+                                        아무것도 안해도 되겠지'</strong><br>
+                                    극단적인 생각까지 하는 20대
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <span class="read-article" onclick="goTo_contents_arti_s();">시리즈 기사 보러가기</span>
+                <!-- 모달 창 시작 -->
+                <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="News01"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <!-- 모달 창 제목 -->
+                            <div class="modal-header">
+                                <h4 class="modal-title center-text" id="News01">
+                                    <strong>'차에 치이면 아무것도 안해도 되겠지'</strong><br>
+                                    극단적인 생각까지 하는 20대
+                                </h4>
+                            </div>
+
+                            <!-- 모달 창 내용 -->
+                            <iframe src="news01.html"></iframe>
+
+                            <!-- 모달 창 닫기 -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 끝 -->
+                <!-- 01번째 카드 뉴스 끝 -->
+
+
+                <!-- 02번째 뉴스 카드 -->
+                <div class="col">
+                    <div class="card card-zoom" data-bs-toggle="modal" data-bs-target="#myModal02">
+                        <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                        <div class="d-flex">
+                            <!-- 이미지 -->
+                            <img src="News02-Thumbnail.png" alt="두번째 뉴스" class="mr-3" />
+
+                            <!-- 텍스트 -->
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <br>
+                                    <br>
+                                    <strong>'근로자'</strong>로 일하고, <br>
+                                    <strong>'프리랜서'</strong>로 돈받기
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 시작 -->
+                <div class="modal fade" id="myModal02" tabindex="-1" role="dialog" aria-labelledby="News02"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <!-- 모달 창 제목 -->
+                            <div class="modal-header">
+                                <h4 class="modal-title center-text" id="News02">
+                                    <strong>'근로자'</strong>로 일하고, <br>
+                                    <strong>'프리랜서'</strong>로 돈받기
+                                </h4>
+                            </div>
+
+                            <!-- 모달 창 내용 -->
+                            <iframe src="news02.html"></iframe>
+
+                            <!-- 모달 창 닫기 -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 끝 -->
+                <!-- 02번째 카드 뉴스 끝 -->
+
+
+                <!-- 03번째 뉴스 카드 -->
+                <div class="col">
+                    <div class="card card-zoom" data-bs-toggle="modal" data-bs-target="#myModal03">
+                        <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                        <div class="d-flex">
+                            <img src="News03-Thumbnail.png" alt="세번째 뉴스" class="mr-3" />
+
+                            <!-- 텍스트 -->
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <br>
+                                    <br>
+                                    <strong>우울증</strong>에 대한 강박</strong>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 시작 -->
+                <div class="modal fade" id="myModal03" tabindex="-1" role="dialog" aria-labelledby="News03"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <!-- 모달 창 제목 -->
+                            <div class="modal-header">
+                                <h4 class="modal-title center-text" id="News03">
+                                    <strong>우울증</strong>에 대한 강박</strong>
+                                </h4>
+                            </div>
+
+                            <!-- 모달 창 내용 -->
+                            <iframe src="news03.html"></iframe>
+
+                            <!-- 모달 창 닫기 -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 끝 -->
+                <!-- 03번째 카드 뉴스 끝 -->
+
+                <!-- 04번째 뉴스 카드 -->
+                <div class="col">
+                    <div class="card card-zoom" data-bs-toggle="modal" data-bs-target="#myModal04">
+                        <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                        <div class="d-flex">
+                            <img src="News04-Thumbnail.png" alt="네번째 뉴스" class="mr-3" />
+
+                            <!-- 텍스트 -->
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <br>
+                                    <br>
+                                    하루 생활비 <strong>0원</strong><br>
+                                    오늘도 <strong>굶주리는</strong> 청년
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 시작 -->
+                <div class="modal fade" id="myModal05" tabindex="-1" role="dialog" aria-labelledby="News04"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <!-- 모달 창 제목 -->
+                            <div class="modal-header">
+                                <h4 class="modal-title center-text" id="News04">
+                                    하루 생활비 <strong>0원</strong><br>
+                                    오늘도 <strong>굶주리는</strong> 청년
+                                </h4>
+                            </div>
+
+                            <!-- 모달 창 내용 -->
+                            <iframe src="news04.html"></iframe>
+
+                            <!-- 모달 창 닫기 -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 끝 -->
+                <!-- 05번째 카드 뉴스 끝 -->
             </div>
-            <!-- 인터랙티브 시리즈 영역 (E) -->
+
+            <button id="button" onclick="scrollToSection('section4')" class="scroll-link"
+                style="display: inline-block; margin-top: 1em;">다른 뉴스 기사 보러가기</button>
 
         </div>
-    </div>
-    <!-- commonfooter -->
-    <footer class="footer__">
-        <div class="corp-info__">
-            <address>
-                <span>서울시 중구 정동길3 경향신문사</span>
-                <span>고객센터 : 02-3701-1114</span>
-                <span>등록번호 : 서울 아02041</span>
-                <span>등록일자 : 2012.03.22</span><br>
-                <span>발행인 : 김석종</span>
-                <span>편집인 : 이기수</span>
-                <span>청소년보호책임자 : 임아영</span>
-                <p style="text-align: left;"><strong>ⓒ경향신문, All rights reserved.</strong></p>
-            </address>
-        </div>
+    </section>
+    <br>
+    <br>
 
-    </footer> <!-- commonfooter -->
-    </div>
-    <!-- <script type="text/javascript" src="js/script.js?1679549668"></script> -->
-    <!-- <script type="text/javascript" src="js/script.js?1679549668"></script> -->
-    <script type="text/javascript" src="js/script.js"></script>
-    <script type="text/javascript" src="js/scriptIndex.js"></script>
+    <section id="section4">
+        <!-- 새로운 섹션 내용 -->
+        <br>
+        <br>
 
-    <script type="text/javaSCRIPT">
-            var impTp = "";
-            if(navigator.userAgent.match(/iPhone|BlackBerry|Mobile|Android|Windows CE/i) && !navigator.userAgent.match(/SHW-M380S|SHW-M180S|SHW-M180L|SCH-I800|SGH-T849|SHW-M480W/i)){
-                     impTp = "&impTp=mobile";
-                     document.write('<img src="//ad.khan.co.kr/imp/mobile_imp.php?dp=103101" width="0" height="0" style="display: none;" alt="img" />');
+        <div class="container mt-5">
+            <!-- 카드 뉴스 각 줄에 2개씩 배치 -->
+            <div class="row row-cols-1 row-cols-md-2">
+
+                <!-- 01번째 뉴스 카드 -->
+                <div class="col">
+                    <div class="card card-zoom" data-bs-toggle="modal" data-bs-target="#othermodal01">
+                        <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                        <div class="d-flex">
+                            <!-- 이미지 -->
+                            <img src="other-news01-Thumbnail.png" alt="다른 뉴스 기사 01" class="mr-3" />
+
+                            <!-- 텍스트 -->
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <br>
+                                    <br>
+                                    응답자의 22.2%의 <br>
+                                    생활비 절약법<br>
+                                    <strong>그냥 굶는다</strong><br>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 모달 창 시작 -->
+                <div class="modal fade" id="othermodal01" tabindex="-1" role="dialog" aria-labelledby="News01"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <!-- 모달 창 제목 -->
+                            <div class="modal-header">
+                                <h4 class="modal-title center-text" id="News01">
+                                    어떻게 식비 아끼세요?<br>
+                                    응답자 22.2%<strong>'그냥 굶는다'</strong>
+                                </h4>
+                            </div>
+
+                            <!-- 모달 창 내용 -->
+                            <iframe src="news06.html"></iframe>
+
+                            <!-- 모달 창 닫기 -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 끝 -->
+                <!-- 01번째 카드 뉴스 끝 -->
+
+
+                <!-- 02번째 뉴스 카드 -->
+                <div class="col">
+                    <div class="card card-zoom" data-bs-toggle="modal" data-bs-target="#othermodal02">
+                        <!-- 이미지와 텍스트를 감싸는 div 추가 -->
+                        <div class="d-flex">
+                            <!-- 이미지 -->
+                            <img src="Writing_an_ article.png" alt="다른 뉴스 기사 02" class="mr-3" />
+
+                            <!-- 텍스트 -->
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <br>
+                                    <br>
+                                    기사 작성중입니다.
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 시작 -->
+                <div class="modal fade" id="othermodal02" tabindex="-1" role="dialog" aria-labelledby="News02"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <!-- 모달 창 제목 -->
+                            <div class="modal-header">
+                                <h4 class="modal-title center-text" id="News02">
+                                    기사 작성중입니다.
+                                </h4>
+                            </div>
+
+                            <!-- 모달 창 내용 -->
+                            <iframe src="Writing.html"></iframe>
+
+                            <!-- 모달 창 닫기 -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 창 끝 -->
+            </div>
+    </section>
+
+    <br>
+    <br>
+
+    <!-- 크레딧 섹션 -->
+    <footer style="background-color: #f0f0f0; padding: 2rem; text-align: center;">
+        <p>&copy; 2023 디지털 콘텐츠 종합 설계 언론 프로젝트</p>
+        <a href="https://instagram.com/jw_youth.news?igshid=NjIwNzIyMDk2Mg==" title="@jw_youth.news"
+            target="_blank">Instagram</a>
+        <br>
+        <a href="https://www.flaticon.com/free-icons/news" title="HTML title icon image" target="_blank">News icons
+            created by Freepik -
+            Flaticon</a>
+
+    </footer>
+
+
+    <!-- TOP 버튼을 감싸는 div -->
+    <div id="scroll-to-top-container">
+        <!-- 실제 버튼 -->
+        <button id="scroll-to-top-button">Top</button>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+
+        window.addEventListener('scroll', function () {
+            const banner = document.querySelector('.banner');
+            const scrollValue = window.scrollY;
+
+            if (scrollValue > 100) { /* 스크롤 위치에 따라 배너 축소 */
+                banner.classList.add('shrink');
             } else {
-                     document.write('<img src="//ad.khan.co.kr/imp/khan_imp.php?dp=015111" width="0" height="0" style="display: none;" alt="img" />');
+                banner.classList.remove('shrink');
             }
-            
-            document.write('<img src="//ad.khan.co.kr/artCnt/khanArt_cnt.php?artid=202303221734021&code=940708&mode=khan'+ impTp +'" width="0" height="0" style="display: none;" />');
-        </script><img src="//ad.khan.co.kr/imp/khan_imp.php?dp=015111" width="0" height="0" style="display: none;"
-        alt="img"><img src="//ad.khan.co.kr/artCnt/khanArt_cnt.php?artid=202303221734021&amp;code=940708&amp;mode=khan"
-        width="0" height="0" style="display: none;">
+        });
 
+        // 버튼 요소 가져오기
+        const scrollToTopButton = document.getElementById('scroll-to-top-button');
 
-    <script type="text/javascript"
-        id="">(function (a, e, b, f, g, c, d) { a[b] = a[b] || function () { (a[b].q = a[b].q || []).push(arguments) }; c = e.createElement(f); c.async = 1; c.src = "https://www.clarity.ms/tag/" + g + "?ref\x3dgtm2"; d = e.getElementsByTagName(f)[0]; d.parentNode.insertBefore(c, d) })(window, document, "clarity", "script", "7dbjtgnofu");</script>
-    <script type="text/javascript" id="">(function () {
-            var f = (new Date).getTime(), a = 0, k = 0, d = !0, h = !1, l = function () { k = (new Date).getTime(); a += k - f; d = !0 }, e = function (b) { d && (d = !1, f = (new Date).getTime(), h = !1); window.clearTimeout(m); m = window.setTimeout(l, 5E3) }, c = function (b, n) { window.addEventListener ? window.addEventListener(b, n) : window.attachEvent && window.attachEvent("on" + b, n) }, g = function (b) {
-                d || (a += (new Date).getTime() - f); !h && 0 < a && 36E5 > a && window.dataLayer.push({ event: "newtTimeTracker", nonIdleTimeElapsed: a }); d && (h = !0); b && "beforeunload" === b.type && window.removeEventListener("beforeunload",
-                    g); a = 0; f = (new Date).getTime(); window.setTimeout(g, 15E3)
-            }; c("keydown", e); c("scroll", e); c("mousedown", e); c("mousemove", e); c("resize", e); c("beforeunload", g); var m = window.setTimeout(l, 5E3); window.setTimeout(g, 15E3)
-        })();</script>
-    <script type="text/javascript"
-        id="">(function (a, e, b, f, g, c, d) { a[b] = a[b] || function () { (a[b].q = a[b].q || []).push(arguments) }; c = e.createElement(f); c.async = 1; c.src = "https://www.clarity.ms/tag/" + g + "?ref\x3dgtm2"; d = e.getElementsByTagName(f)[0]; d.parentNode.insertBefore(c, d) })(window, document, "clarity", "script", "7dbjtgnofu");</script>
+        // 맨 위로 스크롤하는 함수
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // 부드러운 스크롤 효과 적용
+            });
+        }
+
+        // 스크롤 이벤트를 감지하여 버튼 표시/숨기기
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        });
+
+        // 버튼 클릭 시 맨 위로 스크롤
+        scrollToTopButton.addEventListener('click', scrollToTop);
+    </script>
+
+    <script>
+        // 해당 섹션으로 스크롤 이동하는 함수
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
 </body>
 
 </html>
